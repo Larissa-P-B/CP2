@@ -1,12 +1,5 @@
 
-"""
-Listas ligadas são estruturas dinâmicas que permitem inserção/remoção eficiente
-sem realocação de memória (ao contrário de arrays).
 
-Cada nó só sabe sobre seu valor (data) e o próximo nó (next), o que permite encadeamento flexível.
-
-Usada em algoritmos como Merge Sort e Radix Sort (como no seu exercício).
-"""
 import time
 
 class Node:
