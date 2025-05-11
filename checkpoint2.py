@@ -5,44 +5,47 @@ import time
 
 class Node:
     def __init__(self, data):
-        self.data = data
-        self.next = None
+        self.data = data # Armazena o valor do nó
+        self.next = None # Referência para o próximo nó (inicialmente None)
 class LinkedList:
     def __init__(self):
-        self.head = None
+        self.head = None # Inicializa a lista vazia
 
-    def is_empty(self):
+    def is_empty(self): # Método para verificar se a lista está vazia
         return self.head is None
 
     def insert_at_end(self, data):
-        new_node = Node(data)
-        if self.is_empty():
-            self.head = new_node
+        new_node = Node(data)  # Cria um novo nó com os dados fornecidos
+        if self.is_empty():  # Verifica se a lista está vazia
+            self.head = new_node  # Se vazia, o novo nó se torna o head
             return
-        last = self.head
-        while last.next:
+        last = self.head  # Começa pelo head para percorrer a lista
+        while last.next:  # Percorre até encontrar o último nó
             last = last.next
-        last.next = new_node
+        last.next = new_node  # Faz o último nó apontar para o novo nó
 
     def print_list(self):
-        current = self.head
-        elements = []
-        while current:
-            elements.append(str(current.data))
-            current = current.next
-        print(f"[{', '.join(elements)}]")
+        current = self.head  # Começa pelo nó head (início da lista)
+        elements = []  # Lista vazia para armazenar os elementos
+        while current:  # Percorre enquanto houver nós
+            elements.append(str(current.data))  # Converte o dado para string e adiciona à lista
+            current = current.next  # Avança para o próximo nó
+        print(f"[{', '.join(elements)}]")  # Imprime no formato desejado
 
     def split_by_sign(self):
-        negative = LinkedList()
-        positive = LinkedList()
-        current = self.head
-        while current:
+        negative = LinkedList()  # 1. Cria lista para negativos
+        positive = LinkedList()  # 2. Cria lista para positivos/zero
+        current = self.head  # 3. Começa pelo primeiro nó
+
+        while current:  # 4. Percorre toda a lista
             if current.data < 0:
-                negative.insert_at_end(current.data)
+                negative.insert_at_end(current.data)  # 5. Insere no final da lista de negativos
             else:
-                positive.insert_at_end(current.data)
-            current = current.next
-        return negative, positive
+                positive.insert_at_end(current.data)  # 6. Insere no final da lista de positivos
+            current = current.next  # 7. Avança para o próximo nó
+
+        return negative, positive  # 8. Retorna as duas listas
+
 
     @staticmethod
     def merge(left, right):
