@@ -45,25 +45,37 @@ class Node:
   - **self.head = None** Inicializa o atributo head (cabeça da lista) como None, indicando que a lista está vazia no momento da criação.
 head será o primeiro nó da lista. Se head é None, a lista não tem elementos.
 
+  - **def is_empty(self):** Método para verificar se a lista está vazia
+        
 
 ```python
 class LinkedList:
     def __init__(self):
         self.head = None # Inicializa a lista vazia
+        
+    def is_empty(self):  # Método para verificar se a lista está vazia
+        return self.head is None
+```
+___
+- Função do Código:
+  - Esta função **insert_at_start** é um método típico de uma lista encadeada (linked list) 
+que insere um novo nó no início da lista.Esta operação tem complexidade O(1) (tempo constante)
+, pois envolve um número fixo de operações independentemente do tamanho da lista.
+```python
+    def insert_at_start(self, data):
+        new_node = Node(data) # Cria um novo nó com os dados fornecidos
+        new_node.next = self.head # Faz o novo nó apontar para o atual primeiro nó
+        self.head = new_node # Faz o head da lista apontar para o novo nó
 ```
 
 ```python
-def append(self, data):
-    # Cria um novo nó com o dado fornecido
-    new_node = Node(data)
-    #  Se a lista está vazia, o novo nó se torna a cabeça (head)
-    if not self.head:
-        self.head = new_node
-        return
-    # Caso contrário, percorre a lista até o último nó
-    last = self.head
-    while last.next:
-        last = last.next
-    # Conecta o novo nó ao último nó encontrado
-    last.next = new_node    
+    def insert_at_end(self, data):
+        new_node = Node(data)
+        if self.is_empty():
+            self.head = new_node
+            return
+        last = self.head
+        while last.next:
+            last = last.next
+        last.next = new_node
 ```
