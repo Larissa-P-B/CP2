@@ -24,6 +24,14 @@ ___
 
 # 📝	Explicando o código
 
+### Import Time
+- Explicação  do Código:
+    - O comando import time em Python importa o módulo time, que fornece várias funções relacionadas ao tempo e à medição de tempo. 
+```python
+import time 
+```
+___
+
 ### Classe Node (Nó)
 - Explicação  do Código:
      - **self.data = data**,Armazena o valor (dado) que o nó contém.

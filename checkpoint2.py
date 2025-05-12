@@ -1,7 +1,7 @@
 # Nome: Larissa Pereira Biusse
 # RM: 564068
 
-import time
+import time # O comando import time em Python importa o módulo time, que fornece várias funções relacionadas ao tempo e à medição de tempo.
 
 class Node:
     def __init__(self, data):
