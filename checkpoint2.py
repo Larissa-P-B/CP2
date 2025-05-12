@@ -92,96 +92,113 @@ class LinkedList:
 
     @staticmethod
     def split(list):
-        slow = list.head
-        fast = list.head.next
+        # 1. Inicialização dos ponteiros
+        slow = list.head  # Ponteiro lento (avança 1 nó por vez)
+        fast = list.head.next  # Ponteiro rápido (avança 2 nós por vez)
 
+        # 2. Encontrando o meio da lista
         while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
+            slow = slow.next  # Avança um passo
+            fast = fast.next.next  # Avança dois passos
 
+        # 3. Criando as sublistas
         left = LinkedList()
-        left.head = list.head
+        left.head = list.head  # Primeira metade começa no head original
+
         right = LinkedList()
-        right.head = slow.next
-        slow.next = None
+        right.head = slow.next  # Segunda metade começa após o nó médio
+
+        # 4. Separando as listas
+        slow.next = None  # Divide a lista original em duas
+
         return left, right
 
     @staticmethod
     def radix_sort_negative(list):
+        # Verificação de lista vazia
         if not list.head:
             return list
 
-        # Convert to positive
+        # Conversão para valores positivos
         current = list.head
         while current:
-            current.data = -current.data
+            current.data = -current.data  # Inverte o sinal
             current = current.next
 
-        # Perform radix sort
+        # Radix Sort tradicional
         max_num = LinkedList.get_max_value(list)
         exp = 1
 
         while max_num // exp > 0:
-            LinkedList.counting_sort(list, exp)
-            exp *= 10
+            LinkedList.counting_sort(list, exp)  # Ordena por dígito
+            exp *= 10  # Passa para o próximo dígito
 
-        # Convert back to negative
+        # Conversão de volta para negativos
         current = list.head
         while current:
-            current.data = -current.data
+            current.data = -current.data  # Restaura o sinal
             current = current.next
 
         return list
 
     @staticmethod
     def get_max_value(list):
+        # Verifica se a lista está vazia
         if not list.head:
             return 0
 
+        # Inicializa o valor máximo com o primeiro elemento
         max_val = list.head.data
+
+        # Percorre a lista a partir do segundo nó
         current = list.head.next
 
+        # Compara cada elemento com o máximo atual
         while current:
             if current.data > max_val:
                 max_val = current.data
             current = current.next
 
+        # Retorna o valor máximo encontrado
         return max_val
 
     @staticmethod
     def counting_sort(list, exp):
+        # Verifica lista vazia
         if not list.head:
             return
 
-        count = [0] * 10
+        # Contagem de dígitos
+        count = [0] * 10  # Array para contar dígitos 0-9
         current = list.head
-
         while current:
-            index = (current.data // exp) % 10
-            count[index] += 1
+            index = (current.data // exp) % 10  # Pega o dígito atual
+            count[index] += 1  # Incrementa contador
             current = current.next
 
+        #  Soma cumulativa
         for i in range(1, 10):
-            count[i] += count[i - 1]
+            count[i] += count[i - 1]  # Calcula posições finais
 
-        # Extract elements to array
+        #  Extrai elementos para array
         elements = []
         current = list.head
         while current:
             elements.append(current.data)
             current = current.next
 
-        # Build output array
+        # Constrói array ordenado
         output = [0] * len(elements)
-        for i in range(len(elements) - 1, -1, -1):
+        for i in range(len(elements) - 1, -1, -1):  # Ordem reversa para estabilidade
             index = (elements[i] // exp) % 10
             output[count[index] - 1] = elements[i]
             count[index] -= 1
 
-        # Rebuild linked list
-        list.head = None
+        # Reconstrói a lista encadeada
+        list.head = None  # Limpa a lista
         for num in output:
-            list.insert_at_end(num)
+            list.insert_at_end(num)  # Insere elementos ordenados
+
 
     @staticmethod
     def concatenate(negative, positive):

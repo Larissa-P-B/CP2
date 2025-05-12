@@ -25,7 +25,7 @@ ___
 # 📝	Explicando o código
 
 ### Classe Node (Nó)
-- Função do Código:
+- Explicação  do Código:
      - **self.data = data**,Armazena o valor (dado) que o nó contém.
 Pode ser qualquer tipo de dado (inteiro, string, objeto, etc.).
      - **self.next = None**
@@ -39,7 +39,7 @@ class Node:
         self.data = data # Armazena o valor do nó
         self.next = None # Referência para o próximo nó (inicialmente None)
 ```
-- Função do Código:
+- Explicação  do Código:
   - **def __init__(self):** É o construtor da classe, chamado automaticamente quando um objeto LinkedList é criado.
 
   - **self.head = None** Inicializa o atributo head (cabeça da lista) como None, indicando que a lista está vazia no momento da criação.
@@ -57,7 +57,7 @@ class LinkedList:
         return self.head is None
 ```
 ___
-- Função do Código:
+- Explicação  do Código:
   - **insert_at_end** é um método de uma lista encadeada (linked list) que insere um novo nó no *final* da lista.
     - Criação do novo nó:**new_node = Node(data)** - Cria um novo nó contendo o valor data.
     - Verificação se a lista está vazia:**if self.is_empty():** - Se a lista não tem elementos (self.head é None), o novo nó se torna o head.
@@ -81,7 +81,7 @@ Espaço: O(1) (constante), pois só criamos um novo nó e usamos um ponteiro aux
 
 ___
 
-- Função do Código:
+- Explicação  do Código:
   - **print_list** é um método de uma lista encadeada (linked list) que imprime todos os elementos da lista no formato [dado1, dado2, dado3].
     - Inicialização: **current = self.head** - Começa pelo primeiro nó da lista (apontado por self.head).
     - Preparação para coleta de dados: **elements = []** - Cria uma lista Python vazia para armazenar os valores dos nós.
@@ -105,7 +105,7 @@ Espaço: O(n) - Armazena uma cópia dos dados em uma lista Python (para a format
 
 ___
 
-- Função do Código:
+- Explicação  do Código:
   - Esta função **split_by_sign** divide uma lista encadeada em duas listas separadas:Uma para números negativos
 Outra para números positivos (incluindo zero)
     - Inicialização:Cria duas novas listas vazias (negative e positive)
@@ -133,7 +133,7 @@ Outra para números positivos (incluindo zero)
 ```
 ___
 
-- Função do Código:
+- Explicação  do Código:
   - Esta função estática **(@staticmethod)** realiza a operação clássica de merge (fusão) de duas listas encadeadas ordenadas, resultando em uma nova lista também ordenada. 
 É a parte fundamental do algoritmo **Merge Sort** para listas encadeadas.
     - Inicialização: Cria uma lista vazia result para o resultado .Cria um nó **dummy** (artifício comum para simplificar a lógica).Inicializa ponteiros para percorrer as listas **left** e **right**
@@ -199,7 +199,7 @@ Esta implementação é particularmente eficaz como parte de um algoritmo Merge 
 ```
 ___
 
-- Função do Código:
+- Explicação  do Código:
   - Esta função estática implementa o algoritmo **Merge Sort** para listas encadeadas, um método de ordenação eficiente que segue a abordagem "dividir para conquistar".
 A função assume que existe uma função auxiliar **split** que divide a lista ao meio .A função merge já foi explicada anteriormente
 Este é um algoritmo puramente recursivo que cria novas listas em cada chamada (não é in-place)
@@ -243,4 +243,218 @@ Espaço: O(n) (devido à criação de novas listas)
         return LinkedList.merge(left_sorted, right_sorted) # Combina as duas metades ordenadas
 
 ```
+___
 
+- Explicação  do Código:
+    - Esta função estática divide uma lista encadeada em duas sublistas aproximadamente iguais, usando a técnica conhecida como "algoritmo do ponteiro rápido e lento" (tortoise and hare algorithm).
+Características Importantes:**Precisão**:Para listas com número par de elementos, divide exatamente ao meio
+Para número ímpar, left terá um elemento a mais **Eficiência**:Mais eficiente que contar elementos e depois dividir
+Requer apenas uma passagem pela lista. **Uso Típico**:Fundamental para algoritmos como Merge Sort em listas encadeadas Também útil para detectar ciclos em listas
+Esta implementação é particularmente elegante porque:Não precisa saber o tamanho da lista antecipadamente 
+Não modifica a estrutura original além do ponto de divisão .Mantém a ordem original dos elementos em ambas as sublistas
+
+    - Exemplo Prático:
+
+    Para a lista: A → B → C → D → E → None
+    
+    Ponteiros iniciam:
+    
+    slow em A
+    
+    fast em B
+    
+    Primeira iteração:
+    
+    slow vai para B
+    
+    fast vai para D
+    
+    Segunda iteração:
+    
+    slow vai para C (meio)
+    
+    fast tenta ir para None.next (termina o loop)
+    
+    Divisão:
+    
+    left: A → B → C → None
+    
+    right: D → E → None
+  - Complexidade: Tempo: O(n) - Percorre a lista apenas uma vez .Espaço: O(1) - Usa espaço constante (apenas alguns ponteiros)
+```python
+    @staticmethod
+    def split(list):
+        # 1. Inicialização dos ponteiros
+        slow = list.head        # Ponteiro lento (avança 1 nó por vez)
+        fast = list.head.next   # Ponteiro rápido (avança 2 nós por vez)
+    
+        # 2. Encontrando o meio da lista
+        while fast and fast.next:
+            slow = slow.next      # Avança um passo
+            fast = fast.next.next # Avança dois passos
+    
+        # 3. Criando as sublistas
+        left = LinkedList()
+        left.head = list.head    # Primeira metade começa no head original
+        
+        right = LinkedList()
+        right.head = slow.next   # Segunda metade começa após o nó médio
+        
+        # 4. Separando as listas
+        slow.next = None         # Divide a lista original em duas
+        
+        return left, right
+```
+
+___
+
+- Explicação  do Código:
+  - Esta função estática implementa o **Radix Sort** (ordenamento por raiz) otimizado para listas encadeadas contendo valores negativos. 
+É uma variação inteligente do **Radix Sort** tradicional que lida com números negativos através de uma conversão temporária.
+Observações Importantes:**Dependências:** Requer a implementação de **get_max_value()**.Requer um **counting_sort()** estável.
+**Restrições:** Funciona apenas para números inteiros .Assume que todos os valores são negativos (ou precisaria de adaptação para misturar positivos e negativos).
+**Eficácia:** Ideal para ordenar números negativos com muitos dígitos .Performance linear relativa ao tamanho da lista.
+Esta implementação demonstra como adaptar algoritmos de ordenação tradicionais para lidar com casos especiais (valores negativos) de maneira eficiente.
+
+    - Verificação Inicial :Verifica se a lista está vazia (not list.head).Se estiver vazia, retorna imediatamente (não há o que ordenar)
+    - Conversão para Positivos: Percorre toda a lista convertendo cada valor negativo para positivo
+Exemplo: [-5, -3, -9] → [5, 3, 9]
+    - Radix Sort Tradicional:Encontra o valor máximo na lista convertida (get_max_value)
+Ordena os números dígito a dígito, do menos significativo para o mais significativo
+Usa um Counting Sort estável para cada dígito (counting_sort)
+    - Conversão de Volta para Negativos : Após a ordenação, converte todos os valores de volta para negativos
+Exemplo: [3, 5, 9] → [-3, -5, -9]
+  
+  - Complexidade :Tempo: O(d·n).Onde d é o número de dígitos do maior número
+Cada **Counting Sort** tem complexidade O(n).Espaço: O(n) (para o Counting Sort)
+
+
+```python
+    @staticmethod
+    def radix_sort_negative(list):
+        # Verificação de lista vazia
+        if not list.head:
+            return list
+        
+        # Conversão para valores positivos
+        current = list.head
+        while current:
+            current.data = -current.data  # Inverte o sinal
+            current = current.next
+        
+        # Radix Sort tradicional
+        max_num = LinkedList.get_max_value(list)
+        exp = 1
+        
+        while max_num // exp > 0:
+            LinkedList.counting_sort(list, exp)  # Ordena por dígito
+            exp *= 10  # Passa para o próximo dígito
+        
+        # Conversão de volta para negativos
+        current = list.head
+        while current:
+            current.data = -current.data  # Restaura o sinal
+            current = current.next
+        
+        return list
+```
+
+___
+
+- Explicação  do Código:
+  - Esta função estática (@staticmethod) tem como objetivo encontrar o maior valor armazenado em uma lista encadeada. 
+Aplicação Típica:Esta função é particularmente útil:Como auxiliar para algoritmos de ordenação (como visto no Radix Sort)
+Para encontrar extremos em conjuntos de dados .Em operações estatísticas básicas
+Observações. Alternativas:Poderíamos manter um ponteiro para o nó máximo em vez de apenas o valor
+Poderíamos retornar tanto o valor máximo quanto sua posição. Extensibilidade:Fácil de adaptar para encontrar o valor mínimo (mudando a comparação para <)
+Esta implementação é eficiente e direta, seguindo o padrão clássico para encontrar extremos em estruturas encadeadas.
+
+    - Verificação de lista vazia:
+Se a lista não tem elementos (list.head é None), retorna 0 como valor padrão
+    - Inicialização:Assume que o primeiro elemento (list.head.data) é o máximo inicial
+    - Percorrimento da lista:Começa a percorrer a lista a partir do segundo nó (list.head.next)
+Usa um ponteiro current para navegar pela lista
+    - Comparação:Para cada nó, compara seu valor com o max_val atual .Se encontrar um valor maior, atualiza max_val
+    - Resultado:Retorna o maior valor encontrado após percorrer toda a lista.
+
+  - Complexidade:Tempo: O(n) - Precisa percorrer todos os n elementos da lista uma vez
+Espaço: O(1) - Usa apenas espaço constante (variáveis max_val e current)
+```python
+    @staticmethod
+    def get_max_value(list):
+        # Verifica se a lista está vazia
+        if not list.head:
+            return 0
+
+        # Inicializa o valor máximo com o primeiro elemento
+        max_val = list.head.data
+
+        # Percorre a lista a partir do segundo nó
+        current = list.head.next
+
+        # Compara cada elemento com o máximo atual
+        while current:
+            if current.data > max_val:
+                max_val = current.data
+            current = current.next
+
+        # Retorna o valor máximo encontrado
+        return max_val
+    
+
+```
+___
+
+- Explicação  do Código:
+    - Esta função estática implementa o Counting Sort (ordenamento por contagem) adaptado para trabalhar com listas encadeadas, sendo especialmente usada como parte do algoritmo Radix Sort.
+Características Importantes:Estabilidade: Mantém ordem de elementos com mesmo dígito. Uso no Radix Sort: Ordena por um dígito específico
+Adaptação: Converte lista encadeada para array temporário
+Esta implementação é crucial para o Radix Sort, permitindo ordenação eficiente de números dígito a dígito.
+        - Fase de Contagem:Conta quantas vezes cada dígito (0-9) aparece na posição atual (unidade, dezena, etc.)
+        - Soma Cumulativa:Transforma a contagem em posições finais no array ordenado
+        - Reordenação:Percorre a lista original de trás para frente (para manter estabilidade)
+Coloca cada elemento na posição correta no array de saída.
+        - Reconstrução:Reconstrói a lista encadeada com os elementos já ordenados pelo dígito atual
+
+    - Complexidade:Tempo: O(n + k) onde k é o intervalo de valores (10 para dígitos).
+Espaço: O(n) para os arrays auxiliares
+
+
+```python
+    @staticmethod
+    def counting_sort(list, exp):
+        # Verifica lista vazia
+        if not list.head:
+            return
+
+        # Contagem de dígitos
+        count = [0] * 10  # Array para contar dígitos 0-9
+        current = list.head
+        while current:
+            index = (current.data // exp) % 10  # Pega o dígito atual
+            count[index] += 1  # Incrementa contador
+            current = current.next
+
+        #  Soma cumulativa
+        for i in range(1, 10):
+            count[i] += count[i - 1]  # Calcula posições finais
+
+        #  Extrai elementos para array
+        elements = []
+        current = list.head
+        while current:
+            elements.append(current.data)
+            current = current.next
+
+        # Constrói array ordenado
+        output = [0] * len(elements)
+        for i in range(len(elements) - 1, -1, -1):  # Ordem reversa para estabilidade
+            index = (elements[i] // exp) % 10
+            output[count[index] - 1] = elements[i]
+            count[index] -= 1
+
+        # Reconstrói a lista encadeada
+        list.head = None  # Limpa a lista
+        for num in output:
+            list.insert_at_end(num)  # Insere elementos ordenados
+```
