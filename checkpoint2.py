@@ -33,28 +33,28 @@ class LinkedList:
         print(f"[{', '.join(elements)}]")  # Imprime no formato desejado
 
     def split_by_sign(self):
-        negative = LinkedList()  # 1. Cria lista para negativos
-        positive = LinkedList()  # 2. Cria lista para positivos/zero
-        current = self.head  # 3. Começa pelo primeiro nó
+        negative = LinkedList()  # Cria lista para negativos
+        positive = LinkedList()  # Cria lista para positivos/zero
+        current = self.head  # Começa pelo primeiro nó
 
-        while current:  # 4. Percorre toda a lista
+        while current:  # Percorre toda a lista
             if current.data < 0:
-                negative.insert_at_end(current.data)  # 5. Insere no final da lista de negativos
+                negative.insert_at_end(current.data)  # Insere no final da lista de negativos
             else:
-                positive.insert_at_end(current.data)  # 6. Insere no final da lista de positivos
-            current = current.next  # 7. Avança para o próximo nó
+                positive.insert_at_end(current.data)  # Insere no final da lista de positivos
+            current = current.next  # Avança para o próximo nó
 
-        return negative, positive  # 8. Retorna as duas listas
-
+        return negative, positive  # Retorna as duas listas
 
     @staticmethod
     def merge(left, right):
-        result = LinkedList()
-        dummy = Node(0)
-        tail = dummy
-        left_ptr = left.head
-        right_ptr = right.head
+        result = LinkedList()  # 1. Lista resultado
+        dummy = Node(0)  # 2. Nó auxiliar
+        tail = dummy  # 3. Ponteiro para o final
+        left_ptr = left.head  # 4. Ponteiro para a lista esquerda
+        right_ptr = right.head  # 5. Ponteiro para a lista direita
 
+        # 6. Compara elementos das duas listas
         while left_ptr and right_ptr:
             if left_ptr.data <= right_ptr.data:
                 tail.next = Node(left_ptr.data)
@@ -64,28 +64,31 @@ class LinkedList:
                 right_ptr = right_ptr.next
             tail = tail.next
 
+        # 7. Adiciona elementos restantes da esquerda
         while left_ptr:
             tail.next = Node(left_ptr.data)
             left_ptr = left_ptr.next
             tail = tail.next
 
+        # 8. Adiciona elementos restantes da direita
         while right_ptr:
             tail.next = Node(right_ptr.data)
             right_ptr = right_ptr.next
             tail = tail.next
 
-        result.head = dummy.next
+        result.head = dummy.next  # 9. Define o head do resultado
         return result
+
 
     @staticmethod
     def merge_sort(list):
-        if not list.head or not list.head.next:
+        if not list.head or not list.head.next: # Caso base: lista vazia ou com um único elemento
             return list
 
-        left, right = LinkedList.split(list)
-        left_sorted = LinkedList.merge_sort(left)
-        right_sorted = LinkedList.merge_sort(right)
-        return LinkedList.merge(left_sorted, right_sorted)
+        left, right = LinkedList.split(list) # Divide a lista em duas metades
+        left_sorted = LinkedList.merge_sort(left) # Ordena recursivamente cada metade
+        right_sorted = LinkedList.merge_sort(right)# Ordena recursivamente cada metade
+        return LinkedList.merge(left_sorted, right_sorted) # Combina as duas metades ordenadas
 
     @staticmethod
     def split(list):
