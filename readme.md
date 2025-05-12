@@ -39,6 +39,8 @@ class Node:
         self.data = data # Armazena o valor do nó
         self.next = None # Referência para o próximo nó (inicialmente None)
 ```
+___
+### Class LinkedList
 - Explicação  do Código:
   - **def __init__(self):** É o construtor da classe, chamado automaticamente quando um objeto LinkedList é criado.
 
@@ -47,7 +49,7 @@ head será o primeiro nó da lista. Se head é None, a lista não tem elementos.
 
   - **def is_empty(self):** Método para verificar se a lista está vazia
         
-___
+
 ```python
 class LinkedList:
     def __init__(self):
@@ -57,6 +59,7 @@ class LinkedList:
         return self.head is None
 ```
 ___
+### Função insert_at_end:
 - Explicação  do Código:
   - **insert_at_end** é um método de uma lista encadeada (linked list) que insere um novo nó no *final* da lista.
     - Criação do novo nó:**new_node = Node(data)** - Cria um novo nó contendo o valor data.
@@ -81,6 +84,7 @@ Espaço: O(1) (constante), pois só criamos um novo nó e usamos um ponteiro aux
 
 ___
 
+### Função print_list:
 - Explicação  do Código:
   - **print_list** é um método de uma lista encadeada (linked list) que imprime todos os elementos da lista no formato [dado1, dado2, dado3].
     - Inicialização: **current = self.head** - Começa pelo primeiro nó da lista (apontado por self.head).
@@ -104,6 +108,7 @@ Espaço: O(n) - Armazena uma cópia dos dados em uma lista Python (para a format
 ```
 
 ___
+### Função split_by_sign:
 
 - Explicação  do Código:
   - Esta função **split_by_sign** divide uma lista encadeada em duas listas separadas:Uma para números negativos
@@ -132,7 +137,7 @@ Outra para números positivos (incluindo zero)
 
 ```
 ___
-
+### Função @staticmethod Merge:
 - Explicação  do Código:
   - Esta função estática **(@staticmethod)** realiza a operação clássica de merge (fusão) de duas listas encadeadas ordenadas, resultando em uma nova lista também ordenada. 
 É a parte fundamental do algoritmo **Merge Sort** para listas encadeadas.
@@ -199,6 +204,8 @@ Esta implementação é particularmente eficaz como parte de um algoritmo Merge 
 ```
 ___
 
+### Função @staticmethod Merge_Sort:
+
 - Explicação  do Código:
   - Esta função estática implementa o algoritmo **Merge Sort** para listas encadeadas, um método de ordenação eficiente que segue a abordagem "dividir para conquistar".
 A função assume que existe uma função auxiliar **split** que divide a lista ao meio .A função merge já foi explicada anteriormente
@@ -245,6 +252,7 @@ Espaço: O(n) (devido à criação de novas listas)
 ```
 ___
 
+### Função Split:
 - Explicação  do Código:
     - Esta função estática divide uma lista encadeada em duas sublistas aproximadamente iguais, usando a técnica conhecida como "algoritmo do ponteiro rápido e lento" (tortoise and hare algorithm).
 Características Importantes:**Precisão**:Para listas com número par de elementos, divide exatamente ao meio
@@ -308,6 +316,7 @@ Não modifica a estrutura original além do ponto de divisão .Mantém a ordem o
 
 ___
 
+### Função @staticmethod Radix_Sort_Negative:
 - Explicação  do Código:
   - Esta função estática implementa o **Radix Sort** (ordenamento por raiz) otimizado para listas encadeadas contendo valores negativos. 
 É uma variação inteligente do **Radix Sort** tradicional que lida com números negativos através de uma conversão temporária.
@@ -361,6 +370,8 @@ Cada **Counting Sort** tem complexidade O(n).Espaço: O(n) (para o Counting Sort
 
 ___
 
+### Função @staticmethod Get_Max_Value:
+
 - Explicação  do Código:
   - Esta função estática (@staticmethod) tem como objetivo encontrar o maior valor armazenado em uma lista encadeada. 
 Aplicação Típica:Esta função é particularmente útil:Como auxiliar para algoritmos de ordenação (como visto no Radix Sort)
@@ -405,6 +416,7 @@ Espaço: O(1) - Usa apenas espaço constante (variáveis max_val e current)
 ```
 ___
 
+### Função @staticmethod Counting_Sort:
 - Explicação  do Código:
     - Esta função estática implementa o Counting Sort (ordenamento por contagem) adaptado para trabalhar com listas encadeadas, sendo especialmente usada como parte do algoritmo Radix Sort.
 Características Importantes:Estabilidade: Mantém ordem de elementos com mesmo dígito. Uso no Radix Sort: Ordena por um dígito específico
@@ -457,4 +469,47 @@ Espaço: O(n) para os arrays auxiliares
         list.head = None  # Limpa a lista
         for num in output:
             list.insert_at_end(num)  # Insere elementos ordenados
+```
+___
+
+### Função @staticmethod Concatenate:
+
+- Explicação  do Código:
+    - Esta função estática (@staticmethod) realiza a concatenação de duas listas encadeadas (uma com números negativos e outra com positivos) em uma única lista resultante.
+Características Importantes:Não-destrutiva:Não modifica as listas originais (negative e positive permanecem intactas)Cria uma nova lista com os elementos copiados
+Ordem preservada:Mantém a ordem original dos elementos dentro de cada lista .Coloca todos os negativos antes dos positivos
+Versatilidade:Pode concatenar quaisquer duas listas, não apenas de negativos/positivos
+Útil para implementação de algoritmos como o Radix Sort para números com sinais
+Eficiência:Ótima para listas encadeadas (operações no final são O(n)).Se a classe LinkedList mantivesse um ponteiro para o último nó, seria O(1) por inserção
+Casos Especiais .Lista negativa vazia:Retorna cópia da lista positiva
+Lista positiva vazia:Retorna cópia da lista negativa Ambas vazias:Retorna lista vazia
+Esta função é particularmente útil em algoritmos de ordenação que precisam separar e depois recombinar elementos negativos e positivos, como em versões adaptadas do Radix Sort para números inteiros com sinais.
+
+        - Inicialização:Cria uma nova lista encadeada vazia (result) que armazenará o resultado final.
+        - Adição dos elementos negativos:Percorre a lista negative do início ao fim Insere cada elemento no final da lista result usando insert_at_end.
+        - Adição dos elementos positivos:Percorre a lista positive do início ao fim.Insere cada elemento no final da lista result após os negativos.
+        - Resultado:Retorna a nova lista contendo todos os elementos na ordem: negativos seguidos de positivos.
+    - Complexidade: Tempo: O(n + m).Onde n = tamanho da lista negativa E m = tamanho da lista positiva
+Percorre cada lista uma vez Espaço: O(n + m).Cria uma nova lista com todos os elementos
+
+```python
+    @staticmethod
+    def concatenate(negative, positive):
+        # 1. Cria uma nova lista vazia para o resultado
+        result = LinkedList()
+        
+        # 2. Percorre e adiciona todos os elementos da lista negativa
+        current = negative.head
+        while current:
+            result.insert_at_end(current.data)
+            current = current.next
+        
+        # 3. Percorre e adiciona todos os elementos da lista positiva
+        current = positive.head
+        while current:
+            result.insert_at_end(current.data)
+            current = current.next
+        
+        # 4. Retorna a lista concatenada
+        return result
 ```

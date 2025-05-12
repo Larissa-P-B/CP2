@@ -199,18 +199,24 @@ class LinkedList:
         for num in output:
             list.insert_at_end(num)  # Insere elementos ordenados
 
-
     @staticmethod
     def concatenate(negative, positive):
+        # 1. Cria uma nova lista vazia para o resultado
         result = LinkedList()
+
+        # 2. Percorre e adiciona todos os elementos da lista negativa
         current = negative.head
         while current:
             result.insert_at_end(current.data)
             current = current.next
+
+        # 3. Percorre e adiciona todos os elementos da lista positiva
         current = positive.head
         while current:
             result.insert_at_end(current.data)
             current = current.next
+
+        # 4. Retorna a lista concatenada
         return result
 
 
