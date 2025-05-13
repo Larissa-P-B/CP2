@@ -1,6 +1,9 @@
+- Nome: Larissa Pereira Biusse 
+- RM: 564068 
+
 # CP 2: Organizador de Dados em Lista Ligada
 
-## Enunciado
+## 📖 Enunciado
 
 **Você foi contratado para implementar um sistema de organização de
 grandes volumes de dados representados como números inteiros.
@@ -22,7 +25,7 @@ separadamente.
 
 ___
 
-# 📝	Explicando o código
+# 📚 Explicando o código
 
 ### Import Time
 - Explicação  do Código:
@@ -300,23 +303,23 @@ Não modifica a estrutura original além do ponto de divisão .Mantém a ordem o
 ```python
     @staticmethod
     def split(list):
-        # 1. Inicialização dos ponteiros
+        #  Inicialização dos ponteiros
         slow = list.head        # Ponteiro lento (avança 1 nó por vez)
         fast = list.head.next   # Ponteiro rápido (avança 2 nós por vez)
     
-        # 2. Encontrando o meio da lista
+        # Encontrando o meio da lista
         while fast and fast.next:
             slow = slow.next      # Avança um passo
             fast = fast.next.next # Avança dois passos
     
-        # 3. Criando as sublistas
+        # Criando as sublistas
         left = LinkedList()
         left.head = list.head    # Primeira metade começa no head original
         
         right = LinkedList()
         right.head = slow.next   # Segunda metade começa após o nó médio
         
-        # 4. Separando as listas
+        #  Separando as listas
         slow.next = None         # Divide a lista original em duas
         
         return left, right
@@ -521,3 +524,83 @@ Percorre cada lista uma vez Espaço: O(n + m).Cria uma nova lista com todos os e
         # 4. Retorna a lista concatenada
         return result
 ```
+
+___ 
+
+## 💻 Chamada do Código: 
+
+```python
+# Exemplo de entrada
+input_list = [-7, 23, -1, 0, 3, -99, 45, 12] # Define uma lista de exemplo contendo números inteiros positivos, negativos e zero.
+
+# Criar lista ligada
+original_list = LinkedList()# Cria uma lista encadeada vazia chamada original_list
+for num in input_list:
+    original_list.insert_at_end(num)# Percorre cada número na input_list e insere no final da lista encadeada usando insert_at_end
+
+# Separar positivos e negativos .Chama o método split_by_sign() que divide a lista original em duas:
+negative_list, positive_list = original_list.split_by_sign()
+
+# Ordenar negativos com Radix Sort e medir tempo
+start_time = time.time() # Inicia um cronômetro com time.time()
+sorted_negative = LinkedList.radix_sort_negative(negative_list) # Ordena a lista de negativos usando Radix Sort adaptado para números negativos
+radix_time = (time.time() - start_time) * 1000  # ms Para o cronômetro e calcula o tempo de execução em milissegundos
+
+# Ordenar positivos com Merge Sort e medir tempo
+start_time = time.time() # Inicia outro cronômetro
+sorted_positive = LinkedList.merge_sort(positive_list) # Ordena a lista de positivos usando Merge Sort
+merge_time = (time.time() - start_time) * 1000  # ms Para o cronômetro e calcula o tempo de execução em milissegundos
+
+# Concatenar resultados
+final_list = LinkedList.concatenate(sorted_negative, sorted_positive) # Combina as duas listas ordenadas (negativos primeiro, depois positivos) em uma única lista encadeada
+
+# Exibir resultados
+print(f"Entrada: {input_list}\n")
+print(f"Radix Sort: ")
+print("Lista negativa ordenada por Radix Sort:", end=" ")
+sorted_negative.print_list() # Imprime a lista de números negativos já ordenada pelo Radix Sort
+print(f"\nMerge Sort: ")
+print("Lista positiva ordenada por Merge Sort:", end=" ")
+sorted_positive.print_list() # Imprime a lista de números positivos já ordenada pelo Merge Sort
+print(f"\nLista Final Concatenada: ")
+print("Lista final concatenada:", end=" ")
+final_list.print_list() # Imprime a lista final combinada (negativos ordenados + positivos ordenados)
+print(f"\nComplexidade : \n")
+print(f"Complexidade de Merge Sort: O(n log n)\n")
+print(f"Complexidade de Radix Sort: O(nk) (onde k é o número de dígitos)\n") # Exibe a complexidade algorítmica de cada método de ordenação
+
+# Mostra os tempos de execução medidos para cada algoritmo, com 6 casas decimais
+print(f"Tempo de Execução: \n")
+print(f"Tempo de execução do Radix Sort: {radix_time:.6f} ms")
+print(f"Tempo de execução do Merge Sort: {merge_time:.6f} ms")
+```
+___
+
+## 📝 Exemplo de Saida do Código: 
+
+```pycon
+Entrada: [-7, 23, -1, 0, 3, -99, 45, 12]
+
+Radix Sort: 
+Lista negativa ordenada por Radix Sort: [-1, -7, -99]
+
+Merge Sort: 
+Lista positiva ordenada por Merge Sort: [0, 3, 12, 23, 45]
+
+Lista Final Concatenada: 
+Lista final concatenada: [-1, -7, -99, 0, 3, 12, 23, 45]
+
+Complexidade : 
+
+Complexidade de Merge Sort: O(n log n)
+
+Complexidade de Radix Sort: O(nk) (onde k é o número de dígitos)
+
+Tempo de Execução: 
+
+Tempo de execução do Radix Sort: 0.000000 ms
+Tempo de execução do Merge Sort: 0.000000 ms
+
+Process finished with exit code 0
+```
+

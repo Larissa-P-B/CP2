@@ -222,38 +222,46 @@ class LinkedList:
 
 
 # Exemplo de entrada
-input_list = [-7, 23, -1, 0, 3, -99, 45, 12]
+input_list = [-7, 23, -1, 0, 3, -99, 45, 12] # Define uma lista de exemplo contendo números inteiros positivos, negativos e zero.
 
 # Criar lista ligada
-original_list = LinkedList()
+original_list = LinkedList()# Cria uma lista encadeada vazia chamada original_list
 for num in input_list:
-    original_list.insert_at_end(num)
+    original_list.insert_at_end(num)# Percorre cada número na input_list e insere no final da lista encadeada usando insert_at_end
 
-# Separar positivos e negativos
+# Separar positivos e negativos .Chama o método split_by_sign() que divide a lista original em duas:
 negative_list, positive_list = original_list.split_by_sign()
 
 # Ordenar negativos com Radix Sort e medir tempo
-start_time = time.time()
-sorted_negative = LinkedList.radix_sort_negative(negative_list)
-radix_time = (time.time() - start_time) * 1000  # ms
+start_time = time.time() # Inicia um cronômetro com time.time()
+sorted_negative = LinkedList.radix_sort_negative(negative_list) # Ordena a lista de negativos usando Radix Sort adaptado para números negativos
+radix_time = (time.time() - start_time) * 1000  # ms Para o cronômetro e calcula o tempo de execução em milissegundos
 
 # Ordenar positivos com Merge Sort e medir tempo
-start_time = time.time()
-sorted_positive = LinkedList.merge_sort(positive_list)
-merge_time = (time.time() - start_time) * 1000  # ms
+start_time = time.time() # Inicia outro cronômetro
+sorted_positive = LinkedList.merge_sort(positive_list) # Ordena a lista de positivos usando Merge Sort
+merge_time = (time.time() - start_time) * 1000  # ms Para o cronômetro e calcula o tempo de execução em milissegundos
 
 # Concatenar resultados
-final_list = LinkedList.concatenate(sorted_negative, sorted_positive)
+final_list = LinkedList.concatenate(sorted_negative, sorted_positive) # Combina as duas listas ordenadas (negativos primeiro, depois positivos) em uma única lista encadeada
 
 # Exibir resultados
+print(f"Entrada: {input_list}\n")
+print(f"Radix Sort: ")
 print("Lista negativa ordenada por Radix Sort:", end=" ")
-sorted_negative.print_list()
+sorted_negative.print_list() # Imprime a lista de números negativos já ordenada pelo Radix Sort
+print(f"\nMerge Sort: ")
 print("Lista positiva ordenada por Merge Sort:", end=" ")
-sorted_positive.print_list()
+sorted_positive.print_list() # Imprime a lista de números positivos já ordenada pelo Merge Sort
+print(f"\nLista Final Concatenada: ")
 print("Lista final concatenada:", end=" ")
-final_list.print_list()
-print(f"Complexidade de Merge Sort: O(n log n)")
-print(f"Complexidade de Radix Sort: O(nk) (onde k é o número de dígitos)")
+final_list.print_list() # Imprime a lista final combinada (negativos ordenados + positivos ordenados)
+print(f"\nComplexidade : \n")
+print(f"Complexidade de Merge Sort: O(n log n)\n")
+print(f"Complexidade de Radix Sort: O(nk) (onde k é o número de dígitos)\n") # Exibe a complexidade algorítmica de cada método de ordenação
+
+# Mostra os tempos de execução medidos para cada algoritmo, com 6 casas decimais
+print(f"Tempo de Execução: \n")
 print(f"Tempo de execução do Radix Sort: {radix_time:.6f} ms")
 print(f"Tempo de execução do Merge Sort: {merge_time:.6f} ms")
 
