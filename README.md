@@ -1,6 +1,6 @@
 - Nome: Larissa Pereira Biusse 
 - RM: 564068 
-[GitHub](https://github.com/Larissa-P-B/CP2)
+- [GitHub](https://github.com/Larissa-P-B/CP2)
 # CP 2: Organizador de Dados em Lista Ligada
 
 ## 📖 Enunciado
